@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload de arquivos</title>
+</head>
+<body>
+    <h1>Upload de arquivos</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar arquivo</button>
+    </form>
+
+    <h2>Arquivos enviados</h2>
+
+    <ul>
+        {% for item in arquivos %}
+            <li>
+                <a href="{{ item.arquivo.url }}">
+                    {{ item.nome }}
+                </a>
+                - {{ item.enviado_em }}
+            </li>
+        {% empty %}
+            <li>Nenhum arquivo enviado.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
