@@ -1,31 +1,53 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload de arquivos</title>
-</head>
-<body>
-    <h1>Upload de arquivos</h1>
+{% extends "base.html" %}
 
+{% block title %}Upload de Arquivos{% endblock %}
+
+{% block header_title %}Upload de Arquivos{% endblock %}
+{% block header_subtitle %}Envie e gerencie seus arquivos de forma simples e rapida{% endblock %}
+
+{% block content %}
+<div class="upload-section">
+    <h2>Enviar novo arquivo</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar arquivo</button>
+        <div class="form-group">
+            <label for="id_arquivo">Selecione o arquivo:</label>
+            {{ form.arquivo }}
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar arquivo</button>
     </form>
+</div>
 
+<div class="files-section">
     <h2>Arquivos enviados</h2>
 
-    <ul>
+    {% if arquivos %}
+    <ul class="file-list">
         {% for item in arquivos %}
-            <li>
-                <a href="{{ item.arquivo.url }}">
+        <li class="file-item">
+            <div class="file-info">
+                <a href="{{ item.arquivo.url }}" class="file-name" target="_blank">
                     {{ item.nome }}
                 </a>
-                - {{ item.enviado_em }}
-            </li>
-        {% empty %}
-            <li>Nenhum arquivo enviado.</li>
+                <span class="file-date">{{ item.enviado_em|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="file-actions">
+                <a href="{{ item.arquivo.url }}" class="btn btn-primary" target="_blank" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
+                    Abrir
+                </a>
+            </div>
+        </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+    {% else %}
+    <div class="empty-state">
+        <p>Nenhum arquivo enviado ainda.</p>
+        <p>Use o formulario acima para enviar seu primeiro arquivo.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block footer %}
+Sistema de Upload de Arquivos &copy; 2026 - Django + Docker
+{% endblock %}
