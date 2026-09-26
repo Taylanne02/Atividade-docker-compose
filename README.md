@@ -1,4 +1,4 @@
-# Documentação Técnica - Aplicação Django com Docker Compose
+# Defesa- Explicação Técnica
 
 A atividade realizada é um sistema de upload e gerenciamento de arquivos desenvolvido com Django, containerizado com Docker Compose, composto por três serviços: **Django (Gunicorn)**, **Nginx (proxy reverso)** e **PostgreSQL**.
 
